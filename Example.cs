@@ -33,8 +33,8 @@ class Example : Game
 	Example() : base()
 	{
 		GraphicsDeviceManager gdm = new GraphicsDeviceManager(this);
-		gdm.PreferredBackBufferWidth = 1280;
-		gdm.PreferredBackBufferHeight = 720;
+		gdm.PreferredBackBufferWidth = 2048;
+		gdm.PreferredBackBufferHeight = 1600;
 		IsMouseVisible = true;
 		Window.AllowUserResizing = true;
 	}
@@ -60,9 +60,11 @@ class Example : Game
 	{
 		GraphicsDevice.Clear(Color.Black);
 
+		Rectangle window = Window.ClientBounds;
 		sampleImage.Draw(
-			GraphicsDevice.PresentationParameters.BackBufferWidth /
-			(float) Window.ClientBounds.Width
+			window.Width,
+			window.Height,
+			GraphicsDevice.PresentationParameters.BackBufferWidth / (float) window.Width
 		);
 
 		base.Draw(gameTime);
