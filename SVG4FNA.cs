@@ -181,13 +181,13 @@ public class SVG4FNA
 	}
 
 	// TODO: Offset, size, stuff like that
-	public void Draw()
+	public void Draw(float fbScale)
 	{
 		nvgBeginFrame(
 			nvg,
 			device.Viewport.Width,
 			device.Viewport.Height,
-			1.0f
+			fbScale
 		);
 		nvgDrawSVG(nvg, svg);
 		nvgEndFrame(nvg);

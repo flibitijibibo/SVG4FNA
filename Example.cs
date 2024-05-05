@@ -60,13 +60,20 @@ class Example : Game
 	{
 		GraphicsDevice.Clear(Color.Black);
 
-		sampleImage.Draw();
+		sampleImage.Draw(
+			GraphicsDevice.PresentationParameters.BackBufferWidth /
+			(float) Window.ClientBounds.Width
+		);
 
 		base.Draw(gameTime);
 	}
 
 	static void Main(string[] args)
 	{
+		System.Environment.SetEnvironmentVariable(
+			"FNA_GRAPHICS_ENABLE_HIGHDPI",
+			"1"
+		);
 		using (Example e = new Example())
 		{
 			e.Run();
