@@ -1,0 +1,23 @@
+This is SVG4FNA, an SVG container and renderer for use with FNA games.
+
+Project Website: https://github.com/flibitijibibo/SVG4FNA/
+
+License
+-------
+SVG4FNA is released under the zlib license. See LICENSE for details.
+
+About SVG4FNA
+-------------
+SVG4FNA was written for a currently unannounced project by Ethan Lee.
+
+Dependencies
+------------
+SVG4FNA depends on FNA's SetDataPointerEXT extension as well as a private
+variable in FNA's Effect implementation. Porting away from FNA should be easy
+but is still a nonzero amount of work!
+
+Found an issue?
+---------------
+Issues and patches can be reported via GitHub:
+
+https://github.com/flibitijibibo/SVG4FNA/issues

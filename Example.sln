@@ -1,0 +1,28 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio Version 17
+VisualStudioVersion = 17.0.31903.59
+MinimumVisualStudioVersion = 10.0.40219.1
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Example", "Example.csproj", "{33FB032D-8BE8-4DF4-9EDC-476F801BA1F5}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "FNA.NetFramework", "..\FNA\FNA.NetFramework.csproj", "{7F401853-520A-439B-9219-51193114B5C4}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|x64 = Debug|x64
+		Release|x64 = Release|x64
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{33FB032D-8BE8-4DF4-9EDC-476F801BA1F5}.Debug|x64.ActiveCfg = Debug|x64
+		{33FB032D-8BE8-4DF4-9EDC-476F801BA1F5}.Debug|x64.Build.0 = Debug|x64
+		{33FB032D-8BE8-4DF4-9EDC-476F801BA1F5}.Release|x64.ActiveCfg = Release|x64
+		{33FB032D-8BE8-4DF4-9EDC-476F801BA1F5}.Release|x64.Build.0 = Release|x64
+		{7F401853-520A-439B-9219-51193114B5C4}.Debug|x64.ActiveCfg = Debug|x64
+		{7F401853-520A-439B-9219-51193114B5C4}.Debug|x64.Build.0 = Debug|x64
+		{7F401853-520A-439B-9219-51193114B5C4}.Release|x64.ActiveCfg = Release|x64
+		{7F401853-520A-439B-9219-51193114B5C4}.Release|x64.Build.0 = Release|x64
+	EndGlobalSection
+EndGlobal
