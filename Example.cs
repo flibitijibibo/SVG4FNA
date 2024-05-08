@@ -64,7 +64,7 @@ class Example : Game
 
 	protected override void Draw(GameTime gameTime)
 	{
-		GraphicsDevice.Clear(Color.Black);
+		GraphicsDevice.Clear(Color.CornflowerBlue);
 
 		Rectangle window = Window.ClientBounds;
 		svgRenderer.BeginBatch(
