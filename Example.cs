@@ -33,9 +33,15 @@ class Example : Game
 
 	Example() : base()
 	{
+		// Load this early to allow for setting the window size on startup
+		svgImage = new SVG4FNA.Image("example.svg");
+
+		float windowScale = System.Environment.GetEnvironmentVariable(
+			"FNA_GRAPHICS_ENABLE_HIGHDPI"
+		) == "1" ? 2.0f : 1.0f;
 		GraphicsDeviceManager gdm = new GraphicsDeviceManager(this);
-		gdm.PreferredBackBufferWidth = 2048;
-		gdm.PreferredBackBufferHeight = 1600;
+		gdm.PreferredBackBufferWidth = (int) (svgImage.Width * 2 * windowScale);
+		gdm.PreferredBackBufferHeight = (int) (svgImage.Height * 2 * windowScale);
 		IsMouseVisible = true;
 		Window.AllowUserResizing = true;
 	}
@@ -43,7 +49,6 @@ class Example : Game
 	protected override void LoadContent()
 	{
 		svgRenderer = new SVG4FNA(GraphicsDevice);
-		svgImage = new SVG4FNA.Image("example.svg");
 
 		base.LoadContent();
 	}
