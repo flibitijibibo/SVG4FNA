@@ -73,7 +73,7 @@ class Example : Game
 			GraphicsDevice.PresentationParameters.BackBufferWidth / (float) window.Width
 		);
 		svgRenderer.Draw(svgImage);
-		svgRenderer.Draw(svgImage, svgImage.Width);
+		svgRenderer.Draw(svgImage, svgImage.Width, svgImage.Height);
 		svgRenderer.EndBatch();
 
 		base.Draw(gameTime);
