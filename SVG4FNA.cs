@@ -35,6 +35,61 @@ using Microsoft.Xna.Framework.Graphics;
 
 public class SVG4FNA
 {
+	#region Image Container
+
+	public class Image
+	{
+		internal IntPtr svg;
+
+		public float Width
+		{
+			get
+			{
+				unsafe
+				{
+					NSVGimage *i = (NSVGimage*) svg;
+					return i->width;
+				}
+			}
+		}
+
+		public float Height
+		{
+			get
+			{
+				unsafe
+				{
+					NSVGimage *i = (NSVGimage*) svg;
+					return i->height;
+				}
+			}
+		}
+
+		public Image(string svgPath, string units = "px", float dpi = 96.0f)
+		{
+			svg = nsvgParseFromFile(svgPath, units, dpi);
+			if (svg == IntPtr.Zero)
+			{
+				throw new FileNotFoundException(svgPath);
+			}
+		}
+
+		public void Dispose()
+		{
+			nsvgDelete(svg);
+		}
+
+		[StructLayout(LayoutKind.Sequential)]
+		private struct NSVGimage
+		{
+			public float width;
+			public float height;
+			public IntPtr shapes; /* NSVGShape* */
+		}
+	}
+
+	#endregion
+
 	#region Private Variables
 
 	private GraphicsDevice device;
@@ -71,7 +126,6 @@ public class SVG4FNA
 	private StencilOperation ccwStencilPass;
 	private Dictionary<uint, DepthStencilState> depthStencilCache;
 
-	private IntPtr svg;
 	private IntPtr nvg;
 
 	private nvg_gpu_pfn_createContext createContext;
@@ -99,7 +153,7 @@ public class SVG4FNA
 
 	#region Public Constructor
 
-	public SVG4FNA(GraphicsDevice device, string svgPath, string units = "px", float dpi = 96.0f)
+	public SVG4FNA(GraphicsDevice device)
 	{
 		this.device = device;
 
@@ -108,12 +162,6 @@ public class SVG4FNA
 
 		blendCache = new Dictionary<uint, BlendState>();
 		depthStencilCache = new Dictionary<uint, DepthStencilState>();
-
-		svg = nsvgParseFromFile(svgPath, units, dpi);
-		if (svg == IntPtr.Zero)
-		{
-			throw new FileNotFoundException(svgPath);
-		}
 
 		createContext = CreateContext;
 		deleteContext = DeleteContext;
@@ -167,7 +215,6 @@ public class SVG4FNA
 
 	public void Dispose()
 	{
-		nsvgDelete(svg);
 		nvgGpuDelete(nvg);
 
 		blendCache.Clear();
@@ -180,14 +227,41 @@ public class SVG4FNA
 		textures = null;
 	}
 
-	// TODO: Offset, size, stuff like that
-	public void Draw(
+	public void BeginBatch(
 		float frameWidth,
 		float frameHeight,
 		float fbScale
 	) {
 		nvgBeginFrame(nvg, frameWidth, frameHeight, fbScale);
-		nvgDrawSVG(nvg, svg);
+	}
+
+	public void Draw(Image svg, float tX = 0, float tY = 0, float sX = 1, float sY = 1, float a = 0)
+	{
+		bool reset = false;
+		if (tX != 0 || tY != 0)
+		{
+			nvgTranslate(nvg, tX, tY);
+			reset = true;
+		}
+		if (sX != 1 || sY != 1)
+		{
+			nvgScale(nvg, sX, sY);
+			reset = true;
+		}
+		if (a != 0)
+		{
+			nvgRotate(nvg, a);
+			reset = true;
+		}
+		nvgDrawSVG(nvg, svg.svg);
+		if (reset)
+		{
+			nvgResetTransform(nvg);
+		}
+	}
+
+	public void EndBatch()
+	{
 		nvgEndFrame(nvg);
 	}
 
@@ -735,6 +809,18 @@ public class SVG4FNA
 
 	[DllImport("libsvg4fna", CallingConvention = CallingConvention.Cdecl)]
 	private static extern void nvgEndFrame(IntPtr nvg);
+
+	[DllImport("libsvg4fna", CallingConvention = CallingConvention.Cdecl)]
+	private static extern void nvgResetTransform(IntPtr nvg);
+
+	[DllImport("libsvg4fna", CallingConvention = CallingConvention.Cdecl)]
+	private static extern void nvgTranslate(IntPtr nvg, float x, float y);
+
+	[DllImport("libsvg4fna", CallingConvention = CallingConvention.Cdecl)]
+	private static extern void nvgRotate(IntPtr nvg, float angle);
+
+	[DllImport("libsvg4fna", CallingConvention = CallingConvention.Cdecl)]
+	private static extern void nvgScale(IntPtr nvg, float x, float y);
 
 	[DllImport("libsvg4fna", CallingConvention = CallingConvention.Cdecl)]
 	private static extern void nvgDrawSVG(IntPtr nvg, IntPtr svg);

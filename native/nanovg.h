@@ -297,7 +297,7 @@ void nvgGlobalAlpha(NVGcontext* ctx, float alpha);
 // Current coordinate system (transformation) can be saved and restored using nvgSave() and nvgRestore().
 
 // Resets current transform to a identity matrix.
-void nvgResetTransform(NVGcontext* ctx);
+NVGAPI void nvgResetTransform(NVGcontext* ctx);
 
 // Premultiplies current coordinate system by specified matrix.
 // The parameters are interpreted as matrix as follows:
@@ -307,10 +307,10 @@ void nvgResetTransform(NVGcontext* ctx);
 void nvgTransform(NVGcontext* ctx, float a, float b, float c, float d, float e, float f);
 
 // Translates current coordinate system.
-void nvgTranslate(NVGcontext* ctx, float x, float y);
+NVGAPI void nvgTranslate(NVGcontext* ctx, float x, float y);
 
 // Rotates current coordinate system. Angle is specified in radians.
-void nvgRotate(NVGcontext* ctx, float angle);
+NVGAPI void nvgRotate(NVGcontext* ctx, float angle);
 
 // Skews the current coordinate system along X axis. Angle is specified in radians.
 void nvgSkewX(NVGcontext* ctx, float angle);
@@ -319,7 +319,7 @@ void nvgSkewX(NVGcontext* ctx, float angle);
 void nvgSkewY(NVGcontext* ctx, float angle);
 
 // Scales the current coordinate system.
-void nvgScale(NVGcontext* ctx, float x, float y);
+NVGAPI void nvgScale(NVGcontext* ctx, float x, float y);
 
 // Stores the top part (a-f) of the current transformation matrix in to the specified buffer.
 //   [a c e]

@@ -28,7 +28,8 @@ using Microsoft.Xna.Framework;
 
 class Example : Game
 {
-	SVG4FNA sampleImage;
+	SVG4FNA svgRenderer;
+	SVG4FNA.Image svgImage;
 
 	Example() : base()
 	{
@@ -41,16 +42,21 @@ class Example : Game
 
 	protected override void LoadContent()
 	{
-		sampleImage = new SVG4FNA(GraphicsDevice, "example.svg");
+		svgRenderer = new SVG4FNA(GraphicsDevice);
+		svgImage = new SVG4FNA.Image("example.svg");
 
 		base.LoadContent();
 	}
 
 	protected override void UnloadContent()
 	{
-		if (sampleImage != null)
+		if (svgImage != null)
 		{
-			sampleImage.Dispose();
+			svgImage.Dispose();
+		}
+		if (svgRenderer != null)
+		{
+			svgRenderer.Dispose();
 		}
 
 		base.UnloadContent();
@@ -61,11 +67,14 @@ class Example : Game
 		GraphicsDevice.Clear(Color.Black);
 
 		Rectangle window = Window.ClientBounds;
-		sampleImage.Draw(
+		svgRenderer.BeginBatch(
 			window.Width,
 			window.Height,
 			GraphicsDevice.PresentationParameters.BackBufferWidth / (float) window.Width
 		);
+		svgRenderer.Draw(svgImage);
+		svgRenderer.Draw(svgImage, svgImage.Width);
+		svgRenderer.EndBatch();
 
 		base.Draw(gameTime);
 	}
