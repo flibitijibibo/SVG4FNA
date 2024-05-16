@@ -146,7 +146,7 @@ static RenderDrawCall* INTERNAL_allocCall(RenderContext *gl)
 static int INTERNAL_allocPaths(RenderContext *gl, int n)
 {
 	int ret = 0;
-	if (gl->npaths == gl->cpaths)
+	if ((gl->npaths + n) > gl->cpaths)
 	{
 		RenderPath *paths;
 		int cpaths = INTERNAL_maxi(gl->npaths + n, 128) + gl->cpaths / 2; // 1.5x Overallocate
@@ -175,7 +175,7 @@ static int INTERNAL_maxVertCount(const NVGpath* paths, int npaths)
 static int INTERNAL_allocVerts(RenderContext* gl, int n)
 {
 	int ret = 0;
-	if (gl->nverts + n > gl->cverts) {
+	if ((gl->nverts + n) > gl->cverts) {
 		NVGvertex *verts;
 		int cverts = INTERNAL_maxi(gl->nverts + n, 4096) + gl->cverts / 2; // 1.5x Overallocate
 		verts = (NVGvertex*) realloc(gl->verts, sizeof(NVGvertex) * cverts);
