@@ -2432,7 +2432,6 @@ static void nsvg__parseSVG(NSVGparser* p, const char** attr)
 	int i;
 	for (i = 0; attr[i]; i += 2) {
 		if (!nsvg__parseAttr(p, attr[i], attr[i + 1])) {
-#if 0 // We don't care about any of these -flibit
 			if (strcmp(attr[i], "width") == 0) {
 				p->image->width = nsvg__parseCoordinate(p, attr[i + 1], 0.0f, 0.0f);
 			} else if (strcmp(attr[i], "height") == 0) {
@@ -2479,7 +2478,6 @@ static void nsvg__parseSVG(NSVGparser* p, const char** attr)
 						p->alignType = NSVG_ALIGN_SLICE;
 				}
 			}
-#endif
 		}
 	}
 }
