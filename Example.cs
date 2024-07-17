@@ -25,6 +25,8 @@
  */
 
 using Microsoft.Xna.Framework;
+using Microsoft.Xna.Framework.Input;
+using Microsoft.Xna.Framework.Graphics;
 
 class Example : Game
 {
@@ -40,10 +42,16 @@ class Example : Game
 			"FNA_GRAPHICS_ENABLE_HIGHDPI"
 		) == "1" ? 2.0f : 1.0f;
 		GraphicsDeviceManager gdm = new GraphicsDeviceManager(this);
+		gdm.PreparingDeviceSettings += OnPreparingDeviceSettings;
 		gdm.PreferredBackBufferWidth = (int) (svgImage.Width * 2 * windowScale);
 		gdm.PreferredBackBufferHeight = (int) (svgImage.Height * 2 * windowScale);
 		IsMouseVisible = true;
 		Window.AllowUserResizing = true;
+	}
+
+	private void OnPreparingDeviceSettings(object sender, PreparingDeviceSettingsEventArgs e)
+	{
+		e.GraphicsDeviceInformation.PresentationParameters.DepthStencilFormat = DepthFormat.Depth24Stencil8;
 	}
 
 	protected override void LoadContent()
@@ -75,7 +83,8 @@ class Example : Game
 		svgRenderer.BeginBatch(
 			window.Width,
 			window.Height,
-			GraphicsDevice.PresentationParameters.BackBufferWidth / (float) window.Width
+			GraphicsDevice.PresentationParameters.BackBufferWidth / (float) window.Width,
+			1.0f + Mouse.GetState().ScrollWheelValue / 2400.0f
 		);
 		svgRenderer.Draw(svgImage);
 		svgRenderer.Draw(svgImage, svgImage.Width, svgImage.Height);

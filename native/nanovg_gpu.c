@@ -1015,7 +1015,7 @@ NVGcontext* nvgGpuCreate(
 
 	RenderContext *ctx = (RenderContext*) malloc(sizeof(RenderContext));
 	memset(ctx, '\0', sizeof(RenderContext));
-	ctx->flags = NVG_ANTIALIAS | NVG_STENCIL_STROKES | NVG_DEBUG;
+	ctx->flags = 0; // NVG_ANTIALIAS | NVG_STENCIL_STROKES | NVG_DEBUG;
 	ctx->userdata = userdata;
 	ctx->createContext = createContext;
 	ctx->deleteContext = deleteContext;

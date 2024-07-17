@@ -149,6 +149,8 @@ public class SVG4FNA
 	private nvg_gpu_pfn_applyState applyState;
 	private nvg_gpu_pfn_drawPrimitives drawPrimitives;
 
+	private float batchScale;
+
 	#endregion
 
 	#region Public Constructor
@@ -230,9 +232,12 @@ public class SVG4FNA
 	public void BeginBatch(
 		float frameWidth,
 		float frameHeight,
-		float fbScale
+		float fbScale,
+		float vpScale
 	) {
 		nvgBeginFrame(nvg, frameWidth, frameHeight, fbScale);
+		nvgScale(nvg, vpScale, vpScale);
+		batchScale = vpScale;
 	}
 
 	public void Draw(Image svg, float tX = 0, float tY = 0, float sX = 1, float sY = 1, float a = 0)
@@ -257,6 +262,7 @@ public class SVG4FNA
 		if (reset)
 		{
 			nvgResetTransform(nvg);
+			nvgScale(nvg, batchScale, batchScale);
 		}
 	}
 
